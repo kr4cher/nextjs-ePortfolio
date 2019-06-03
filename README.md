@@ -263,4 +263,4 @@ Now deploy your app with the following command. If you try it the first time you
 > now
 ```
 
-If everything is done right your app should be accessible under a <i>.now.sh</i> link.
+If everything is done right your app should be accessible under a <i>.now.sh</i> link shown in the console.
