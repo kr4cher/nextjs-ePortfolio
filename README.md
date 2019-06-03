@@ -228,3 +228,39 @@ export default withRouter(Index);
 ```
 
 Now you can access the app by the dynamic route [http://localhost:3000/hello/Foo](http://localhost:3000/hello/Foo).
+
+#### Deploying the Application
+
+To deploy the app with ZEIT Now you need to install the Now CLI from [https://zeit.co/download](https://zeit.co/download).
+
+Just create the following configuration files. 
+
+<b>"now.json":</b>
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    }
+  ]
+}
+```
+
+<b>"next.config.js"</b>
+
+```javascript
+module.exports = {
+  target: 'serverless',
+};
+```
+
+Now deploy your app with the following command. If you try it the first time you have to login first.
+
+```
+> now
+```
+
+If everything is done right your app should be accessible under a <i>.now.sh</i> link.
