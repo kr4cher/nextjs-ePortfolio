@@ -18,7 +18,7 @@ To start, create a sample project by running the following commands into your pr
 ```
 
 Then open the "package.json" in the hello-next directory and add the following NPM scripts:
-```JSON
+```json
 "scripts": {
   "dev": "next",
   "build": "next build",
@@ -143,3 +143,88 @@ export default function About() {
   );
 }
 ```
+
+#### Custom Server
+
+Now we are going to create a custom server for our app using Express.
+
+To add express into your app run the following command:
+
+```
+> npm install express
+```
+
+Then create a file called server.js in the root folder of your app and add following content:
+
+```javascript
+const express = require('express');
+const next = require('next');
+
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({dev});
+const handle = app.getRequestHandler();
+
+app
+  .prepare()
+  .then(() => {
+    const server = express();
+
+    server.get('*', (req, res) => {
+      return handle(req, res);
+    });
+
+    server.listen(3000, err => {
+      if (err) throw err;
+      console.log('> Ready on http://localhost:3000');
+    });
+  })
+  .catch(ex => {
+    console.error(ex.stack);
+    process.exit(1);
+  });
+```
+
+Now update the npm script in the "package.json" to:
+
+```json
+{
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  }
+}
+```
+
+You can run the app again with <code>npm rund dev</code> to start the express server.
+
+To define a custom route add the following lines to the "server.js":
+```javascript
+server.get('/p/:name', (req, res) => {
+  const actualPage = '/post';
+  const queryParams = { title: req.params.name };
+  app.render(req, res, actualPage, queryParams);
+});
+```
+
+And the "pages/index.js" like:
+
+```javascript
+import {withRouter} from 'next/router';
+import Header from '../components/Header';
+
+function Index(props) {
+  const name = props.router.query.name || 'World';
+
+  return (
+    <div>
+      <Header/>
+        <p>Hello {name}!</p>
+    </div>
+  );
+}
+
+export default withRouter(Index);
+```
+
+Now you can access the app by the dynamic route [http://localhost:3000/hello/Foo](http://localhost:3000/hello/Foo).
