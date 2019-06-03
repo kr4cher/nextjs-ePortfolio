@@ -62,7 +62,7 @@ export default function About() {
 
 Then you can access that page with [http://localhost:3000/about](http://localhost:3000/about).
 
-To link these pages use the link tag from next instead the <a>-Tag to do a client navigation without refreshing the page.
+To link these pages use the link tag from next instead the a-Tag to do a client navigation without refreshing the page.
 So add the following line to the "pages/index.js" file:
 
 ```javascript
@@ -81,10 +81,65 @@ export default Index;
 ```
 
 You may need to add attributes or props to your links for a number of reasons.
-Perhaps you need to add a title attribute to the link. We can add it like this:
+Perhaps you need to add a title attribute to the link. You can add it like this:
 
-```javascript
+```html
 <Link href="/about">
   <a title="About Page">About Page</a>
 </Link>
+```
+
+#### Shared Components
+
+Since exported pages are JavaScript modules, we can import other JavaScript components into them as well.
+So we create a Header component and add the following lines.
+
+<b>"components/Header.js":</b>
+```javascript
+import Link from 'next/link';
+
+const linkStyle = {
+  marginRight: 15
+};
+
+const Header = () => (
+  <div>
+    <Link href="/">
+      <a style={linkStyle}>Home</a>
+    </Link>
+    <Link href="/about">
+      <a style={linkStyle}>About</a>
+    </Link>
+  </div>
+);
+
+export default Header;
+```
+
+<b>"pages/index.js":</b>
+```javascript
+import Header from '../components/Header';
+
+export default function Index() {
+  return (
+    <div>
+      <Header/>
+      <p>Hello World!</p>
+    </div>
+  );
+}
+```
+
+<b>"pages/about.js":</b>
+```javascript
+import Header from '../components/Header';
+
+export default function About() {
+  return (
+    <div>
+      <Header/>
+      <p>This is the about page</p>
+    </div>
+  );
+}
 ```
