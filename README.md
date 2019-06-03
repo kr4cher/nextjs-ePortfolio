@@ -1,6 +1,6 @@
 # ePortfolio about Next.js
 
-In this repo you will find all documents and tutorials from my ePortfolio.
+In this repo you will find all documents and tutorials from my ePortfolio about Next.js and ZEIT Now.
 
 The PowerPoint slides can be found [here](./slides/ePortfolio-Next.js.pptx "ePortfolio-Next.js.pptx").
 
